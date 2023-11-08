@@ -1,0 +1,14 @@
+# Food: {{ name }}
+{{ description }}
+
+## Nutrition Facts
+NDR: {{ food.nutritional_density_rating or 0 }}/100 (Measure of how filling it is)
+HEI: {{ food.hydration_efficacy_index or 0 }}/100 (Measure of how hydrating it is)
+
+## Buyable at
+{% if not shops %}
+Not Buyable (loot only)
+{% endif -%}
+{% for shop in shops -%}
+{{ shop.name_raw }}
+{% endfor -%}
