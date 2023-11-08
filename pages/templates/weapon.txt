@@ -1,0 +1,24 @@
+# Weapon: {{ name }}
+{{ description }}
+
+## Weapon Stats
+{%- set stats = personal_weapon %}
+Weapon Type: {{ stats.class }} {{ stats.type }}
+Magazine: {{ stats.magazine_size }} rounds
+Range: {{ stats.effective_range }}
+Fire Rate: {{ stats.rof }}
+Damage/Shot: {{ stats.damage_per_shot }}
+
+## Attachments
+{% for port in ports -%}
+{% if port.display_name -%}
+{{ port.display_name }} (Size {%if port.sizes.min == port.sizes.max%}{{port.sizes.min}}{%else%}{{port.sizes.min}}-{{port.sizes.max}}{%endif%})
+{% endif -%}
+{%- endfor %}
+## Purchase Locations
+{% if not shops -%}
+Not Buyable (loot only)
+{% endif -%}
+{% for shop in shops -%}
+{{ shop.name_raw }}
+{% endfor -%}
