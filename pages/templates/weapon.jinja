@@ -15,10 +15,9 @@ Damage/Shot: {{ stats.damage_per_shot }}
 {{ port.display_name }} (Size {%if port.sizes.min == port.sizes.max%}{{port.sizes.min}}{%else%}{{port.sizes.min}}-{{port.sizes.max}}{%endif%})
 {% endif -%}
 {%- endfor %}
-## Purchase Locations
-{% if not shops -%}
-Not Buyable (loot only)
-{% endif -%}
-{% for shop in shops -%}
-{{ shop.name_raw }}
-{% endfor -%}
+## Buyable at
+{% for shop in shops %}
+{{ shop.name_raw }} ({{ shop["items"][0].price_calculated|commas }} aUEC)
+{% else %}
+Not Buyable
+{% endfor %}

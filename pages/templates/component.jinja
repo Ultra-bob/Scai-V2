@@ -1,0 +1,13 @@
+# Ship Component: {{ name }} (Size {{ size }} Grade {{ grade }} {{ class }} {{ type|fix_camelcase }})
+{{ description }}
+
+{% block component_stats %}
+content
+{% endblock %}
+
+## Buyable at
+{% for shop in shops %}
+{{ shop.name_raw }} ({{ shop["items"][0].price_calculated|commas }} aUEC)
+{% else %}
+Not Buyable
+{% endfor %}

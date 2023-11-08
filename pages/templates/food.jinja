@@ -6,9 +6,8 @@ NDR: {{ food.nutritional_density_rating or 0 }}/100 (Measure of how filling it i
 HEI: {{ food.hydration_efficacy_index or 0 }}/100 (Measure of how hydrating it is)
 
 ## Buyable at
-{% if not shops %}
-Not Buyable (loot only)
-{% endif -%}
-{% for shop in shops -%}
-{{ shop.name_raw }}
-{% endfor -%}
+{% for shop in shops %}
+{{ shop.name_raw }} ({{ shop["items"][0].price_calculated|commas }} aUEC)
+{% else %}
+Not Buyable
+{% endfor %}
