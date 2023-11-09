@@ -1,0 +1,8 @@
+{% extends "component.jinja" %}
+{% block component_stats %}
+## Specs
+Max shield HP: {{ shield.max_shield_health|commas }}
+Max shield regen: {{ shield.max_shield_regen|commas }}HP/sec
+Damaged regen delay: {{ shield.regen_delay.damage }}
+Downed regen delay: {{ shield.regen_delay.downed }}
+{% endblock %}

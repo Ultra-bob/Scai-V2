@@ -1,0 +1,7 @@
+{% extends "component.jinja" %}
+{% block component_stats %}
+## Specs
+Cooling rate: {{ cooler.cooling_rate }}
+IR suppression: {{ cooler.suppression_ir_factor * 100 }}%
+Heat suppression: {{ cooler.suppression_heat_factor * 100 }}%
+{% endblock %}
