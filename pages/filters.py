@@ -5,3 +5,6 @@ def fix_camelcase(camel_case):
 
 def numberFormat(value):
     return format(int(value), ',d')
+
+def minutes_to_time(minutes):
+    return "{:.0f}:{:.0f}".format(*divmod(round(minutes*60), 60))

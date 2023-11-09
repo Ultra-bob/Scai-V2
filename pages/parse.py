@@ -1,18 +1,10 @@
-def parse_food(food):
-    effects = ", ".join(food["food"]["effects"])
-    locations = "\n".join([shop["name_raw"] for shop in food["shops"]])
+from jinja2 import Environment, FileSystemLoader
+import filters
+environment = Environment(loader=FileSystemLoader("templates/"), lstrip_blocks=True, trim_blocks=True)
 
-    return """Food: {name}
-            {description}
+environment.filters.update({"fix_camelcase": filters.fix_camelcase, "commas": filters.numberFormat})
 
-            ### Nutrition Facts
-            NDR: {nutritional_density_rating}/100 (Measure of how filling it is)
-            HEI: {hydration_efficacy_index}/100 (Measure of how hydrating it is)
-            Effects: [EFFECTS]
-                
-            ### Purchase Locations
-            [PURCHASE]
-            """.format(**(food | food["food"])).replace("[EFFECTS]", effects).replace("[PURCHASE]", locations).replace("\t", "").strip()
-
-def parse_weapon(weapon):
-    
+def parse(data, format_):
+    if format_ == "component":
+        format_ = f"components/{data['type'].lower()}"
+    return environment.get_template(f"{format_}.jinja").render(data)
