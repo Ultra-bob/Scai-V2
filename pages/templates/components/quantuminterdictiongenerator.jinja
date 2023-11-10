@@ -1,0 +1,14 @@
+{% extends "component.jinja" %}
+{% block component_stats %}
+## Specs
+Quantum Jammer Range: {{ quantum_interdiction_generator.jammer_range }}m
+Charge Time: Instant
+Cooldown Time: None
+Active Time: Infinite
+
+### Quantum Snare
+Range: {{ quantum_interdiction_generator.interdiction_range }}m
+Charge Time: {{ quantum_interdiction_generator.charge_duration }}s
+Cooldown Time: {{ quantum_interdiction_generator.cooldown_duration }}s
+Active Time: {{ quantum_interdiction_generator.discharge_duration }}s
+{% endblock %}

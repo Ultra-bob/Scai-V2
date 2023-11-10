@@ -1,0 +1,15 @@
+{% extends "component.jinja" %}
+{% block component_stats %}
+## Specs
+Fuel Consumption: {{ (quantum_drive.quantum_fuel_requirement * 1000)|round(2) }}L/Mkm
+Spool-Up Time: {{ quantum_drive.modes[0].spool_up_time }}s
+{% for mode in quantum_drive.modes %}
+{% if mode.type == "normal_jump" %}
+### Space Travel
+Speed: {{ (mode.drive_speed / 1000)|commas }}km/s
+{% else %}
+### Planetary Travel
+Speed: {{ (mode.drive_speed / 1000)|commas }}km/s
+{% endif %}
+{% endfor %}
+{% endblock %}
