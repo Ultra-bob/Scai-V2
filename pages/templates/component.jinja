@@ -1,5 +1,5 @@
 # Ship Component: {{ name }} (Size {{ size }} {{ class }} Grade {{ grade }} {{ type|fix_camelcase }})
-{{ description }}
+{{ description or "No description" }}
 
 {% block component_stats %}
 CONTENT
