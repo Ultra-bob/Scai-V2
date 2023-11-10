@@ -2,7 +2,7 @@
 {{ description }}
 
 ## Weapon Stats
-{%- set stats = personal_weapon %}
+{% set stats = personal_weapon %}
 Weapon Type: {{ stats.class }} {{ stats.type }}
 Magazine: {{ stats.magazine_size }} rounds
 Range: {{ stats.effective_range }}
@@ -12,12 +12,12 @@ Damage/Shot: {{ stats.damage_per_shot }}
 ## Attachments
 {% for port in ports -%}
 {% if port.display_name -%}
-{{ port.display_name }} (Size {%if port.sizes.min == port.sizes.max%}{{port.sizes.min}}{%else%}{{port.sizes.min}}-{{port.sizes.max}}{%endif%})
+{{ port.display_name|fix_camelcase }} (Size {%if port.sizes.min == port.sizes.max%}{{port.sizes.min}}{%else%}{{port.sizes.min}}-{{port.sizes.max}}{%endif%})
 {% endif -%}
 {%- endfor %}
 ## Buyable at
 {% for shop in shops %}
 {{ shop.name_raw }} ({{ shop["items"][0].price_calculated|commas }} aUEC)
 {% else %}
-Not Buyable
+Not Buyable (loot only)
 {% endfor %}
