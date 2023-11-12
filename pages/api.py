@@ -6,8 +6,9 @@ from json import loads, dumps
 import numpy as np
 from cohere import Client
 from dotenv import load_dotenv
+from os import getenv
 
-load_dotenv()
+print(load_dotenv("/run/secrets/dotenv", verbose=True))
 
 co = Client()
 
@@ -16,7 +17,7 @@ index = db.ft("idx:docs")
 
 dumpb = lambda data: dumps(data).encode()
 
-PORT = "23214"
+PORT = "8000"
 
 async def polyamorous_send_and_recv():
     address = 'tcp://127.0.0.1:' + PORT

@@ -1,0 +1,6 @@
+numpy
+redis
+pynng
+trio
+cohere
+load_dotenv

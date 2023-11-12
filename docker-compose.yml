@@ -12,3 +12,13 @@ services:
     volumes:
       - "./db/:/data"
     restart: unless-stopped
+  database-api:
+    build: pages
+    ports:
+      - "36866:8000"
+    secrets:
+      - dotenv
+
+secrets:
+  dotenv:
+    file: .env
