@@ -1,5 +1,5 @@
 import redis
-from redis.commands.search.field import NumericField, TagField, TextField
+from redis.commands.search.field import VectorField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 
@@ -9,7 +9,18 @@ def create_schema():
     schema = (
         TextField("$.title", as_name="title"),
         TextField("$.content", as_name="content"),
-        TextField("$.url", as_name="url")
+        TextField("$.description", as_name="description"),
+        TextField("$.url", as_name="url"),
+        VectorField(
+        "$.description_embeddings",
+            "FLAT",
+            {
+                "TYPE": "FLOAT32",
+                "DIM": 1024, # cohere vector dimension
+                "DISTANCE_METRIC": "IP",
+            },
+            as_name="vector",
+        ),
     )
 
     index = r.ft("idx:docs")
