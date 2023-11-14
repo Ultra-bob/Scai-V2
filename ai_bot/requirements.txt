@@ -1,0 +1,4 @@
+pynng
+openai
+trio
+python-dotenv

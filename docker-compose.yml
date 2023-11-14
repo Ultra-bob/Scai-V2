@@ -21,6 +21,15 @@ services:
       - "23214:8000"
     secrets:
       - dotenv
+  ai-bot:
+    platform: linux/amd64
+    depends_on:
+      - database-api
+    build: ai_bot
+    ports:
+      - "23215:8000"
+    secrets:
+      - dotenv
 
 secrets:
   dotenv:
