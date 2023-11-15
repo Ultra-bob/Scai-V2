@@ -1,21 +1,32 @@
 version: '3.8'
 
 services:
-  redis-stack:
+  pages-db:
     image: redis/redis-stack:latest
-    container_name: redis-stack
+    container_name: redis-pages
     environment:
-      - REDIS_ARGS="--save 60 1"
+      - REDIS_ARGS=--save 60 1 --dbfilename pages.rdb
     ports:
       - "6379:6379"
       - "8001:8001"
     volumes:
       - "./db/:/data"
     restart: unless-stopped
+  data-db:
+    image: redis/redis-stack:latest
+    container_name: redis-data
+    environment:
+      - REDIS_ARGS=--save 60 1 --dbfilename data.rdb
+    ports:
+      - "6378:6379"
+      - "8002:8001"
+    volumes:
+      - "./db/:/data"
+    restart: unless-stopped
   database-api:
     platform: linux/amd64
     depends_on:
-      - redis-stack
+      - pages-db
     build: pages
     ports:
       - "23214:8000"
@@ -25,6 +36,7 @@ services:
     platform: linux/amd64
     depends_on:
       - database-api
+      - data-db
     build: ai_bot
     ports:
       - "23215:8000"

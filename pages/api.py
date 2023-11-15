@@ -1,5 +1,6 @@
 from pynng import Pair1
 import trio
+from redis.commands.json.path import Path
 from redis.commands.search.query import Query
 from redis import Redis
 from json import loads, dumps
@@ -12,8 +13,9 @@ print(load_dotenv("/run/secrets/dotenv", verbose=True))
 
 co = Client()
 
-db = Redis(host="redis-stack", port=6379, db=0, decode_responses=True)
-index = db.ft("idx:docs")
+pages_db = Redis(host="pages-db", port=6379, db=0, decode_responses=True)
+data_json = Redis(host="data-db", port=6379, db=0, decode_responses=True).json()
+index = pages_db.ft("idx:docs")
 
 dumpb = lambda data: dumps(data).encode()
 
@@ -43,6 +45,8 @@ async def polyamorous_send_and_recv():
                         await msg.pipe.asend(dumpb({"result": [loads(r.json) for r in results]}))
                     else:
                         await msg.pipe.asend(dumpb({"error": "No results!"}))
+                case {"logs": update, "id": request_id}:
+                    data_json.set(f"logs:{request_id}", Path.root_path(), (data_json.get(f"logs:{request_id}") or {}) | update )
 
 
 

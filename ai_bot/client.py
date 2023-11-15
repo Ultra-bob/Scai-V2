@@ -4,7 +4,7 @@ from json import loads, dumps
 dumpb = lambda data: dumps(data).encode()
 
 with Pair1(dial="tcp://localhost:23215") as s:
-    s.send(dumpb({"query": "What shield generator does the 325i have?"}))
+    s.send(dumpb({"query": "What shield generator does the 325i have?", "id": ""}))
     #print("Sent")
     while True:
         #print("Waiting...")
@@ -16,4 +16,7 @@ with Pair1(dial="tcp://localhost:23215") as s:
             case {"result": result}:
                 print()
                 print(result)
+                break
+            case {"error": error}:
+                print(error)
                 break

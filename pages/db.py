@@ -3,7 +3,7 @@ from redis.commands.search.field import VectorField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 
-r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+r = redis.Redis(host="data-db", port=6379, db=0, decode_responses=True)
 
 def create_schema():
     schema = (
