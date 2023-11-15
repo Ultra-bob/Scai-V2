@@ -34,7 +34,7 @@ async def handle_request(msg: Message):
     await msg.pipe.asend(dumpb({"update": "Searching"}))
 
     with Pair1(dial="tcp://database-api:8000", polyamorous=True) as db:
-        await db.asend(dumpb({"search": query}))
+        await db.asend(dumpb({"search": query, "id": qid}))
         response = loads((await db.arecv_msg()).bytes)["result"]
         query_result = "\n\n---\n\n".join([page["content"].strip() for page in response])
 
