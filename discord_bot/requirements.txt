@@ -1,0 +1,4 @@
+interactions.py
+pynng
+uvloop
+python-dotenv

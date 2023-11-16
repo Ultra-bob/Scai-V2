@@ -1,10 +1,12 @@
 from pynng import Pair1
 from json import loads, dumps
+from secrets import token_urlsafe
+from time import time
 
 dumpb = lambda data: dumps(data).encode()
 
 with Pair1(dial="tcp://localhost:23215") as s:
-    s.send(dumpb({"query": "What shield generator does the 325i have?", "id": "random_data"}))
+    s.send(dumpb({"query": "Compare the p52 and 72", "id": token_urlsafe(16), "timestamp": time()}))
     #print("Sent")
     while True:
         #print("Waiting...")

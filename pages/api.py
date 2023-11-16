@@ -61,8 +61,7 @@ async def polyamorous_send_and_recv():
                     log_update(qid, {"search": {
                         "embed_time": embed_time(),
                         "database_lookup_time": db_time(),
-                        "results": [loads(r.json) for r in results],
-                        "generated_embedding": query_emb
+                        "results": [r.id for r in results],
                     }})
                 case {"logs": update, "id": request_id}:
                     log_update(request_id, update)

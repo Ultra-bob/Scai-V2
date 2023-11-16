@@ -4,7 +4,7 @@ import openai
 from dotenv import load_dotenv
 import trio
 from contextlib import contextmanager
-from time import perf_counter
+from time import perf_counter, time
 
 @contextmanager
 def timer() -> float:
@@ -25,7 +25,7 @@ async def handle_request(msg: Message):
     data = loads(msg.bytes)
     query, qid = (None, None)
     match data:
-        case {"query": query_, "id": qid_}:
+        case {"query": query_, "id": qid_, "timestamp": timestamp}:
             query, qid = query_, qid_
         case invalid:
             await msg.pipe.asend(dumpb({"error": "Invalid request"}))
@@ -54,6 +54,8 @@ async def handle_request(msg: Message):
         await db.asend(dumpb({"logs": {
             "question": query,
             "result": completion.choices[0].message.content,
+            "start_time": timestamp,
+            "end_time": time(),
             "openai": {
                 "prompt_tokens": completion.usage.prompt_tokens,
                 "completion_tokens": completion.usage.completion_tokens,
